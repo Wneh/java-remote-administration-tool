@@ -11,8 +11,6 @@ public class CommandReceiver implements Runnable{
 	private boolean run;
 	private RobotSteer rs;
 	
-	//PWNED
-	
 	public CommandReceiver(int port){
 		try {
 			ss = new ServerSocket(port);
