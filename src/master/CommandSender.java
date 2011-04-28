@@ -9,8 +9,6 @@ public class CommandSender{
 	private Socket s;
 	private PrintWriter out;
 	
-	//pwned
-	
 	public CommandSender(String host, int port){		
 		try {
 			s = new Socket(InetAddress.getByName(host),port);
