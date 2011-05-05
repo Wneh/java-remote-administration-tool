@@ -31,4 +31,14 @@ public class CommandSender{
 	public void send(String in){
 		out.println(in);
 	}
+	public void closeAll(){
+		try {
+			s.close();
+			out.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 }

@@ -7,14 +7,17 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.*;
 
 @SuppressWarnings("serial")
-public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListener,KeyListener {
+public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListener,KeyListener,WindowListener {
 	
 	CommandSender cs;
 	JTextField tf;
+	ImageReceiver ir;
 	
 	public GUIMASTER(){
 		
@@ -23,9 +26,9 @@ public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListen
 		
 		String host = JOptionPane.showInputDialog("IP:");
 		
-		JLabel jl = new ImageReceiver(host,2000);
+		ir = new ImageReceiver(host,2000);
 		tf = new JTextField();
-		JScrollPane p = new JScrollPane(jl);
+		JScrollPane p = new JScrollPane(ir);
 		c.add(p,BorderLayout.CENTER);
 		c.add(tf,BorderLayout.SOUTH);
 		
@@ -103,6 +106,42 @@ public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListen
 		//cs.sendKeyPressed(arg0.getKeyCode());
 		//setTitle("Key: "+arg0.getKeyCode());
 		//tf.setText("");
+		
+	}
+	@Override
+	public void windowActivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void windowClosed(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void windowClosing(WindowEvent arg0) {
+		cs.closeAll();
+		
+		
+	}
+	@Override
+	public void windowDeactivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void windowDeiconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void windowIconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void windowOpened(WindowEvent arg0) {
+		// TODO Auto-generated method stub
 		
 	}
 }
