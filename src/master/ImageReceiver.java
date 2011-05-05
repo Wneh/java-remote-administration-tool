@@ -4,6 +4,13 @@ import javax.swing.*;
 import java.io.*;
 import java.net.*;
 
+/**
+ * Extends a jlabel and addes a socket functions the the label pushes pictures 
+ * printscreens from the slave.
+ * 
+ * @author Carl
+ */
+
 public class ImageReceiver extends JLabel implements Runnable, Serializable{
 	/**
 	 * To make eclipse stfu ;)
@@ -13,6 +20,12 @@ public class ImageReceiver extends JLabel implements Runnable, Serializable{
 	private Thread t;
 	private Socket s;
 
+	/**
+	 * Creates a new ImageReciver
+	 * 
+	 * @param host
+	 * @param port
+	 */
 	public ImageReceiver(String host,int port){
 		try {
 			s = new Socket(InetAddress.getByName(host),port);
@@ -24,11 +37,18 @@ public class ImageReceiver extends JLabel implements Runnable, Serializable{
 		run = false;
 		startRun();
 	}
+	/**
+	 * Starts the thread. This one is called from the constuctor by default
+	 */
 	public void startRun(){
 		t = new Thread( this );
         run= true;
         t.start();		
 	}
+	
+	/**
+	 * The threads that keeps receiving printscreens from the slave.
+	 */
 	public void run(){
 		while(run){
 			try {
@@ -43,6 +63,10 @@ public class ImageReceiver extends JLabel implements Runnable, Serializable{
 			}	
 		}
 	}
+	/**
+	 * Closes all the streams and sockets 
+	 * Use for a clean exit.
+	 */
 	public void closeAll(){
 		run = false;
 		try {

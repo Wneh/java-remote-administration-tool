@@ -3,6 +3,12 @@ package slave;
 import java.net.*;
 import java.io.*;
 
+
+/**
+ * Receives command and execute them.
+ * @author Carl
+ *
+ */
 public class CommandReceiver implements Runnable{
 	
 	private Socket s;
@@ -11,6 +17,10 @@ public class CommandReceiver implements Runnable{
 	private boolean run;
 	private RobotSteer rs;
 	
+	/**
+	 * Creates a new CommandReciever
+	 * @param port For the serversocket
+	 */
 	public CommandReceiver(int port){
 		try {
 			ss = new ServerSocket(port);
@@ -20,11 +30,17 @@ public class CommandReceiver implements Runnable{
 			e.printStackTrace();
 		}	
 	}
+	/**
+	 * Execute the thread start.
+	 */
 	public void startRun(){
 		t = new Thread( this );
         run = true;
         t.start();		
 	}
+	/**
+	 * Thread run in here.
+	 */
 	public void run(){
 		BufferedReader in = null;
 		try {
@@ -50,6 +66,10 @@ public class CommandReceiver implements Runnable{
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * Private class that execute the command using the RobotSteer class.
+	 * @param raw
+	 */
 	private void handleCommand(String raw){
 		String[] temp = raw.split(" ");
 				
@@ -81,6 +101,10 @@ public class CommandReceiver implements Runnable{
 			System.out.println("lol fick else satsen aktiverad");
 		}
 	}
+	/**
+	 * Closes all the sockets and stream
+	 * Use for clean exits
+	 */
 	public void closeAll(){
 		run = false;
 		try {

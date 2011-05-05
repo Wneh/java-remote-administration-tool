@@ -1,5 +1,10 @@
 package slave;
-
+/**
+ * Class thats handles the commandclass and the ImageSender
+ * 
+ * @author Carl
+ *
+ */
 public class NetWork {
 	
 	private Thread threadImage;
@@ -8,6 +13,10 @@ public class NetWork {
 	private ImageSender im;
 	private CommandReceiver cr;
 	
+	/**
+	 * Creates a new NetWork
+	 * This will also starts each thread in the classes
+	 */
 	public NetWork(){		
 		
 		im = new ImageSender(2000);
@@ -19,6 +28,9 @@ public class NetWork {
 		threadImage.start();
 		threadCommand.start();	
 	}
+	/**
+	 * Calls the closeAll functions in CommandReciever and ImageSender
+	 */
 	public void closeAll(){
 		im.closeAll();
 		cr.closeAll();

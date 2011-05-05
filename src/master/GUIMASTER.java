@@ -1,6 +1,7 @@
 package master;
 
 import java.awt.BorderLayout;
+
 import java.awt.Container;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -11,6 +12,13 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import javax.swing.*;
+
+/**
+ * The GUI for the master program
+ *
+ * @author Carl
+ *
+ */
 
 @SuppressWarnings("serial")
 public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListener,KeyListener,WindowListener {
@@ -47,6 +55,7 @@ public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListen
 	public static void main(String[] arg){
 		new GUIMASTER();
 	}
+	
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		if(arg0.getButton() == MouseEvent.BUTTON1){
