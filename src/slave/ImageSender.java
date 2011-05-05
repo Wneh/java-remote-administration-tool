@@ -56,4 +56,14 @@ public class ImageSender extends Thread{
 		BufferedImage bi = r.createScreenCapture(new Rectangle(size));
 		return new ImageIcon(bi);
 	}
+	public void closeAll(){
+		run = false;
+		try {
+			ss.close();
+			s.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+	}
 }

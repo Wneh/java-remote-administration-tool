@@ -5,7 +5,7 @@ import java.net.*;
 import javax.swing.*;
 import java.awt.*;
 
-public class GUISLAVE extends JFrame implements ActionListener{
+public class GUISLAVE extends JFrame implements ActionListener,WindowListener{
 	
 	private static final long serialVersionUID = -4519823190906100723L;
 	private JLabel info;
@@ -13,8 +13,6 @@ public class GUISLAVE extends JFrame implements ActionListener{
 	private JPanel center,south;
 	private String IP;
 	private String NAME;
-	
-	@SuppressWarnings("unused")
 	private NetWork nw;
 
 	public GUISLAVE(){
@@ -59,6 +57,46 @@ public class GUISLAVE extends JFrame implements ActionListener{
 		if(e.getSource() == quit){
 			System.exit(0);
 		}
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		nw.closeAll();	
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
 }

@@ -43,6 +43,12 @@ public class CommandReceiver implements Runnable{
 				System.out.println("Read failed");
 			}
 		}
+		try {
+			in.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	private void handleCommand(String raw){
 		String[] temp = raw.split(" ");
@@ -74,6 +80,16 @@ public class CommandReceiver implements Runnable{
 		else{
 			System.out.println("lol fick else satsen aktiverad");
 		}
+	}
+	public void closeAll(){
+		run = false;
+		try {
+			ss.close();
+			s.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 	}
 	
 }

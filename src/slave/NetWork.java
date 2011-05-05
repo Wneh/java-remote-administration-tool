@@ -19,4 +19,8 @@ public class NetWork {
 		threadImage.start();
 		threadCommand.start();	
 	}
+	public void closeAll(){
+		im.closeAll();
+		cr.closeAll();
+	}
 }
