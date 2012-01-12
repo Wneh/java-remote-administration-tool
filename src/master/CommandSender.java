@@ -1,7 +1,5 @@
 package master;
 
-//Testing the network branch
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.*;
