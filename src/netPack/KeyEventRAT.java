@@ -7,7 +7,7 @@ package netPack;
  *
  */
 
-public class KeyEventRAT {
+public class KeyEventRAT extends EventRAT {
 	
 	private int keyCode;
 	
