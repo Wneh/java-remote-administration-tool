@@ -7,6 +7,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.*;
 
+import javax.swing.ImageIcon;
+
+import netPack.EventRAT;
 import netPack.KeyEventRAT;
 import netPack.MouseEventRAT;
 
@@ -18,10 +21,13 @@ public class NetWork implements Runnable{
 	private boolean run;
 	private Thread t;
 	private ObjectInputStream oin = null;       
-    private ObjectOutputStream oout = null;  
+    private ObjectOutputStream oout = null; 
+    
+    private ImageIcon image;
 	
 	
-	public NetWork(){
+	public NetWork(ImageIcon image){
+		this.image = image;
 		run = false;
 	}
 	/**
@@ -37,6 +43,22 @@ public class NetWork implements Runnable{
 			run = false;
 		} 
 	}
+	/**
+	 * Send a object of KeyEventRAT/MouseEventRAT to the slave to execute
+	 * @param toSend Instance of KeyEventRAT/MouseEventRAT
+	 */
+	public void sendCommand(EventRAT toSend){
+		//Fast check that either the keyevent is null or the outputstream is
+		if(toSend != null && oout != null){
+			try{
+				//Sends it out threw the outputsteam
+				oout.writeObject(toSend);
+			} 
+			catch (IOException e){
+				e.printStackTrace();
+			}
+		}
+	}
 	public void startRun(){
 		t = new Thread(this);
 		t.start();
@@ -45,7 +67,9 @@ public class NetWork implements Runnable{
 		BufferedReader in = null;
 		Object inputPackage;
 		try {
+			System.out.println("Waiting for connection");
 			s = ss.accept();
+			System.out.println("Connection establish");
 			in = new BufferedReader(new InputStreamReader(s.getInputStream()));
 		} catch (IOException e1) {
 			e1.printStackTrace();
@@ -62,6 +86,10 @@ public class NetWork implements Runnable{
 					//We got and mouseevent
 
 				}
+				else if(inputPackage instanceof ImageIcon){
+					image = (ImageIcon)inputPackage;
+					//Now do somehthing with the picture that just we got
+				}
 				else{
 					//We have no idea what we got! Print it out 
 					System.out.println("Recieved an unknown package type");
@@ -72,6 +100,7 @@ public class NetWork implements Runnable{
 			System.out.println("Read failed");
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
+			System.out.println("Class not found failed");
 			e.printStackTrace();
 		}
 		//Finally close all the stuff that we opened

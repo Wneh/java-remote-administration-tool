@@ -13,6 +13,9 @@ import java.awt.event.WindowListener;
 
 import javax.swing.*;
 
+import netPack.KeyEventRAT;
+import netPack.MouseEventRAT;
+
 /**
  * The GUI for the master program
  *
@@ -26,15 +29,18 @@ public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListen
 	CommandSender cs;
 	JTextField tf;
 	ImageReceiver ir;
+	NetWork nw;
+	ImageIcon ii;
 	
 	public GUIMASTER(){
 		
 		Container c = getContentPane();
 		c.setLayout(new BorderLayout());
 		
-		String host = JOptionPane.showInputDialog("IP:");
+		//String host = JOptionPane.showInputDialog("IP:");
+		nw = new NetWork(ii);
 		
-		ir = new ImageReceiver(host,2000);
+		//ir = new ImageReceiver(host,2000);
 		tf = new JTextField();
 		JScrollPane p = new JScrollPane(ir);
 		c.add(p,BorderLayout.CENTER);
@@ -44,8 +50,7 @@ public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListen
 		tf.addKeyListener(this);
 		p.addMouseListener(this);
 		
-		cs = new CommandSender(host,2001);	
-		
+		//cs = new CommandSender(host,2001);	
 		
 		setSize(800,600);
 		setTitle("R.A.T by Carl Eriksson");
@@ -60,11 +65,11 @@ public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListen
 	public void mouseClicked(MouseEvent arg0) {
 		if(arg0.getButton() == MouseEvent.BUTTON1){
 			//leftclicked
-			cs.sendMouseClick(1);
+			nw.sendCommand(new MouseEventRAT(1));
 		}
 		else if(arg0.getButton() == MouseEvent.BUTTON3){
 			//rightclicked
-			cs.sendMouseClick(3);
+			nw.sendCommand(new MouseEventRAT(3));
 		}		
 	}
 	@Override
@@ -96,12 +101,14 @@ public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListen
 	public void mouseMoved(MouseEvent e) {
 		// TODO Auto-generated method stub
 		setTitle("X: "+e.getX()+" , Y: "+e.getY());
-		cs.sendMouseMove(e.getX(),e.getY());
+		//cs.sendMouseMove(e.getX(),e.getY());
+		nw.sendCommand(new MouseEventRAT(e.getX(),e.getY()));
 	}
 	@Override
 	public void keyPressed(KeyEvent key) {
 		int keyCode = key.getKeyCode();
-		cs.sendKeyPressed(keyCode);		
+		//cs.sendKeyPressed(keyCode);	
+		nw.sendCommand(new KeyEventRAT(keyCode));
 		setTitle("Key: "+key.getKeyCode());
 	}
 	@Override
