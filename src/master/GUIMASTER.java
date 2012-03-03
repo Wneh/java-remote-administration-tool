@@ -26,11 +26,12 @@ import netPack.MouseEventRAT;
 @SuppressWarnings("serial")
 public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListener,KeyListener,WindowListener {
 	
-	CommandSender cs;
+	//CommandSender cs;
 	JTextField tf;
-	ImageReceiver ir;
+	//ImageReceiver ir;
 	NetWork nw;
 	ImageIcon ii;
+	JLabel jl;
 	
 	public GUIMASTER(){
 		
@@ -42,7 +43,9 @@ public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListen
 		
 		//ir = new ImageReceiver(host,2000);
 		tf = new JTextField();
-		JScrollPane p = new JScrollPane(ir);
+		jl = new JLabel();
+		jl.setIcon(ii);
+		JScrollPane p = new JScrollPane(jl);
 		c.add(p,BorderLayout.CENTER);
 		c.add(tf,BorderLayout.SOUTH);
 		
@@ -101,13 +104,11 @@ public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListen
 	public void mouseMoved(MouseEvent e) {
 		// TODO Auto-generated method stub
 		setTitle("X: "+e.getX()+" , Y: "+e.getY());
-		//cs.sendMouseMove(e.getX(),e.getY());
 		nw.sendCommand(new MouseEventRAT(e.getX(),e.getY()));
 	}
 	@Override
 	public void keyPressed(KeyEvent key) {
 		int keyCode = key.getKeyCode();
-		//cs.sendKeyPressed(keyCode);	
 		nw.sendCommand(new KeyEventRAT(keyCode));
 		setTitle("Key: "+key.getKeyCode());
 	}
@@ -119,10 +120,7 @@ public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListen
 	@Override
 	public void keyTyped(KeyEvent arg0) {
 		// TODO Auto-generated method stub
-		//cs.sendKeyPressed(arg0.getKeyCode());
-		//setTitle("Key: "+arg0.getKeyCode());
-		//tf.setText("");
-		
+
 	}
 	@Override
 	public void windowActivated(WindowEvent arg0) {
@@ -136,9 +134,8 @@ public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListen
 	}
 	@Override
 	public void windowClosing(WindowEvent arg0) {
-		cs.closeAll();
-		
-		
+		//cs.closeAll();
+	
 	}
 	@Override
 	public void windowDeactivated(WindowEvent arg0) {
