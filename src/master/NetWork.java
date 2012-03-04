@@ -12,6 +12,7 @@ import javax.swing.ImageIcon;
 import netPack.EventRAT;
 import netPack.KeyEventRAT;
 import netPack.MouseEventRAT;
+import netPack.PictureEventRAT;
 
 public class NetWork implements Runnable{
 	
@@ -65,7 +66,7 @@ public class NetWork implements Runnable{
 	}
 	public void run(){
 		BufferedReader in = null;
-		Object inputPackage;
+		EventRAT inputPackage;
 		try {
 			System.out.println("Waiting for connection");
 			s = ss.accept();
@@ -76,7 +77,7 @@ public class NetWork implements Runnable{
 		}
 		try{
 			//Loop forever and ever.
-			while(run && ((inputPackage=(Object)oin.readObject()) != null )){
+			while(run && ((inputPackage=(EventRAT)oin.readObject()) != null )){
 				//Check what kind of package we got
 				if(inputPackage instanceof KeyEventRAT){
 					//We got an keyevent
@@ -86,8 +87,8 @@ public class NetWork implements Runnable{
 					//We got and mouseevent
 
 				}
-				else if(inputPackage instanceof ImageIcon){
-					image = (ImageIcon)inputPackage;
+				else if(inputPackage instanceof PictureEventRAT){
+					image = ((PictureEventRAT) inputPackage).getIi();
 					//Now do somehthing with the picture that just we got
 				}
 				else{
