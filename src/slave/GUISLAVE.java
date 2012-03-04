@@ -45,7 +45,9 @@ public class GUISLAVE extends JFrame implements ActionListener,WindowListener{
 		setTitle("R.A.T by Carl Eriksson");
 		setSize(300,100);
 		
-		nw = new NetWork();
+		String host = JOptionPane.showInputDialog(null,"Host:");
+		
+		nw = new NetWork(host,2000);
 	}
 	
 	public static void main(String[] args) {
@@ -73,7 +75,7 @@ public class GUISLAVE extends JFrame implements ActionListener,WindowListener{
 
 	@Override
 	public void windowClosing(WindowEvent e) {
-		nw.closeAll();	
+		//nw.closeAll();	
 	}
 
 	@Override
