@@ -81,11 +81,11 @@ public class NetWork implements Runnable{
 				//Check what kind of package we got
 				if(inputPackage instanceof KeyEventRAT){
 					//We got an keyevent
-
+					//Do nothing cause we're the one to be in control
 				}
 				else if(inputPackage instanceof MouseEventRAT){
 					//We got and mouseevent
-
+					//Do nothing cause we're the one to be in control
 				}
 				else if(inputPackage instanceof PictureEventRAT){
 					image = ((PictureEventRAT) inputPackage).getIi();
