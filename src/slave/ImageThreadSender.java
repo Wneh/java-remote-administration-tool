@@ -1,5 +1,6 @@
 package slave;
 
+import java.awt.AWTException;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.Robot;
@@ -28,6 +29,12 @@ public class ImageThreadSender extends Thread {
 	public ImageThreadSender(String host, int port){
 		this.host = host;
 		this.port = port;	
+		
+		try {
+			r = new Robot();
+		} catch (AWTException e) {
+			System.err.println("[ERROR] - Could not create the robot object");
+		}
 	}
 	
 	public void run(){
@@ -37,11 +44,14 @@ public class ImageThreadSender extends Thread {
 			s = new Socket(host,port);
 			
 			oout = new ObjectOutputStream(s.getOutputStream());
+			oout.flush();
 			oin = new ObjectInputStream(s.getInputStream());
 			
 			while(run){
 				//Keep sending pictures to the server as fast as possible
+				System.out.println("[INFO] - Start sending picture");
 				oout.writeObject(new PictureEventRAT(this.getScreen()));
+				System.out.println("[INFO] - Done sending picture");
 			}
 			
 		} catch (UnknownHostException e) {

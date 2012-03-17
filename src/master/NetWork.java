@@ -33,6 +33,7 @@ public class NetWork{
 			System.out.println("Waiting for connection");
 			s1 = ss.accept();
 			System.out.println("Connection establish");
+			
 			it = new ImageThread(s1,image);
 			ti = new Thread(it);
 			

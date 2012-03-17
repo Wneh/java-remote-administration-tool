@@ -26,7 +26,7 @@ public class ImageThread extends Thread{
 		
 		//Try setting up the streams
 		try {
-			oout = new ObjectOutputStream(s.getOutputStream());
+			oout = new ObjectOutputStream(s.getOutputStream());			
 			oin = new ObjectInputStream(s.getInputStream());
 		} catch (IOException e) {
 			System.err.println("[ERROR] - Error trying to setup the objects streams");
@@ -41,10 +41,13 @@ public class ImageThread extends Thread{
 		try {
 			while (run && ((inputPic = (PictureEventRAT)oin.readObject()) != null)){
 				//Grab the picture and set it into the ImageIcon
+				System.out.println("[INFO] - Getting image");
 				ii = inputPic.getIi();
+				System.out.println("[INFO] - Got the image");
 			}
 		} catch (IOException e) {
 			System.err.println("[ERROR] - IOException in reciveving the picture");
+			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			System.err.println("[ERROR] - Uknown class reciveved");
 		}

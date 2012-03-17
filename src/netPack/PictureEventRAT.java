@@ -1,8 +1,12 @@
 package netPack;
 
+import java.io.Serializable;
+
 import javax.swing.ImageIcon;
 
-public class PictureEventRAT extends EventRAT{
+public class PictureEventRAT extends EventRAT implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	
 	private ImageIcon ii;
 	
