@@ -43,7 +43,9 @@ public class ImageThread extends Thread{
 		try {
 			while (run && ((inputPic = (PictureEventRAT)oin.readObject()) != null)){
 				//Grab the picture and set it into the ImageIcon
+				System.out.println("[INFO] - start picture");
 				jl.setIcon(inputPic.getIi());
+				System.out.println("[INFO] - stop picture");
 			}
 		} catch (IOException e) {
 			System.err.println("[ERROR] - IOException in reciveving the picture");

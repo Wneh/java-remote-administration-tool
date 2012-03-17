@@ -52,7 +52,7 @@ public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListen
 		p.addMouseListener(this);
 		
 		//cs = new CommandSender(host,2001);
-		nw = new NetWork(this.ii,2000);
+		nw = new NetWork(this.jl,2000);
 		
 		setSize(800,600);
 		setTitle("R.A.T by Carl Eriksson");
@@ -67,11 +67,11 @@ public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListen
 	public void mouseClicked(MouseEvent arg0) {
 		if(arg0.getButton() == MouseEvent.BUTTON1){
 			//leftclicked
-			//nw.sendCommand(new MouseEventRAT(1));
+			nw.sendCommand(new MouseEventRAT(1));
 		}
 		else if(arg0.getButton() == MouseEvent.BUTTON3){
 			//rightclicked
-			//nw.sendCommand(new MouseEventRAT(3));
+			nw.sendCommand(new MouseEventRAT(3));
 		}		
 	}
 	@Override
@@ -103,12 +103,12 @@ public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListen
 	public void mouseMoved(MouseEvent e) {
 		// TODO Auto-generated method stub
 		setTitle("X: "+e.getX()+" , Y: "+e.getY());
-		//nw.sendCommand(new MouseEventRAT(e.getX(),e.getY()));
+		nw.sendCommand(new MouseEventRAT(e.getX(),e.getY()));
 	}
 	@Override
 	public void keyPressed(KeyEvent key) {
 		int keyCode = key.getKeyCode();
-		//nw.sendCommand(new KeyEventRAT(keyCode));
+		nw.sendCommand(new KeyEventRAT(keyCode));
 		setTitle("Key: "+key.getKeyCode());
 	}
 	@Override

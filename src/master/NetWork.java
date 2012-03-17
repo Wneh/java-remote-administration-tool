@@ -8,6 +8,7 @@ import java.io.ObjectOutputStream;
 import java.net.*;
 
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 import netPack.EventRAT;
 import netPack.KeyEventRAT;
@@ -19,10 +20,12 @@ public class NetWork{
 	private ServerSocket ss;
 	private int port;
 	private ImageThread it;
+	private CommandThread ct;
 	private Thread ti;
+	private Thread tt;
 	 
 	
-	public NetWork(ImageIcon image,int port){
+	public NetWork(JLabel jl,int port){
 		this.port = port;
 		Socket s1,s2;
 		
@@ -31,39 +34,31 @@ public class NetWork{
 			ss = new ServerSocket(port);
 			
 			System.out.println("Waiting for connection");
-			s1 = ss.accept();
-			System.out.println("Connection establish");
-			
-			it = new ImageThread(s1,image);
-			ti = new Thread(it);
-			
-			//And start the threads
-			ti.start();
-			
+			System.out.println("Setting up image connection");
+				s1 = ss.accept();
+				it = new ImageThread(s1,jl);
+				ti = new Thread(it);
+				ti.start();
+			System.out.println("Done with image");
+			System.out.println("Setting up command connection");
+				s2 = ss.accept();
+				ct = new CommandThread(s2);
+				tt = new Thread(ct);
+				tt.start();
+			System.out.println("Done with command");
 		} 
 		catch (IOException ex){
 			System.err.println(ex.getMessage());
 		} 
 	}
-	
-	
-/*	*//**
-	 * Send a object of KeyEventRAT/MouseEventRAT to the slave to execute
-	 * @param toSend Instance of KeyEventRAT/MouseEventRAT
-	 *//*
 	public void sendCommand(EventRAT toSend){
-		//Fast check that either the keyevent is null or the outputstream is
-		if(toSend != null && oout != null){
-			try{
-				//Sends it out threw the outputsteam
-				oout.writeObject(toSend);
-			} 
-			catch (IOException e){
-				e.printStackTrace();
-			}
+		//Check so the CommandThread is created properly
+		if(ct != null){
+			ct.sendCommand(toSend);
 		}
-	}*/
-
+	}
+	
+	
 /*	public void run(){
 		
 		
