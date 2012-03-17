@@ -1,7 +1,5 @@
 package slave;
 
-import java.awt.AWTException;
-
 import netPack.*;
 
 /**

@@ -1,14 +1,11 @@
 package slave;
 
-import java.awt.AWTException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
-
 import netPack.EventRAT;
-import netPack.PictureEventRAT;
 
 public class CommandThreadReceiver extends Thread {
 	
