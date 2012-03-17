@@ -14,28 +14,42 @@ import netPack.KeyEventRAT;
 import netPack.MouseEventRAT;
 import netPack.PictureEventRAT;
 
-public class NetWork implements Runnable{
+public class NetWork{
 	
-	private Socket s;
 	private ServerSocket ss;
 	private int port;
-	private boolean run;
-	private Thread t;
-	private ObjectInputStream oin = null;       
-    private ObjectOutputStream oout = null; 
-    
-    private ImageIcon image;
-	
+	private ImageThread it;
+	private Thread ti;
+	 
 	
 	public NetWork(ImageIcon image,int port){
 		this.port = port;
-		this.image = image;
-		run = false;
+		Socket s1,s2;
+		
+		//Wait for the connections for the picture and command sockets
+		try{
+			ss = new ServerSocket(port);
+			
+			System.out.println("Waiting for connection");
+			s1 = ss.accept();
+			System.out.println("Connection establish");
+			it = new ImageThread(s1,image);
+			ti = new Thread(it);
+			
+			//And start the threads
+			ti.start();
+			
+		} 
+		catch (IOException ex){
+			System.err.println(ex.getMessage());
+		} 
 	}
-	/**
+	
+	
+/*	*//**
 	 * Send a object of KeyEventRAT/MouseEventRAT to the slave to execute
 	 * @param toSend Instance of KeyEventRAT/MouseEventRAT
-	 */
+	 *//*
 	public void sendCommand(EventRAT toSend){
 		//Fast check that either the keyevent is null or the outputstream is
 		if(toSend != null && oout != null){
@@ -47,20 +61,10 @@ public class NetWork implements Runnable{
 				e.printStackTrace();
 			}
 		}
-	}
-	public void startRun(){
-		t = new Thread(this);
-		t.start();
-	}
-	public void run(){
-		try{
-			ss = new ServerSocket(port);
-			run = true;
-		} 
-		catch (IOException ex){
-			System.err.println(ex.getMessage());
-			run = false;
-		} 
+	}*/
+
+/*	public void run(){
+		
 		
 		EventRAT inputPackage;
 		try {
@@ -119,6 +123,6 @@ public class NetWork implements Runnable{
 				e.printStackTrace();
 			}
 		}
-	}
+	}*/
 
 }
