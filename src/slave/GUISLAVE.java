@@ -47,7 +47,10 @@ public class GUISLAVE extends JFrame implements ActionListener,WindowListener{
 		
 		String host = JOptionPane.showInputDialog(null,"Host:");
 		
-		nw = new NetWork(host,2000);
+		//nw = new NetWork(host,2000);
+		ImageThreadSender its = new ImageThreadSender(host,2000);
+		Thread t = new Thread(its);
+		t.start();
 	}
 	
 	public static void main(String[] args) {
