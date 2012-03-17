@@ -1,5 +1,7 @@
 package netPack;
 
+import java.io.Serializable;
+
 /**
  * Class that holds the information for a key event that will be send over the socket
  * 
@@ -7,9 +9,10 @@ package netPack;
  *
  */
 
-public class KeyEventRAT extends EventRAT {
+public class KeyEventRAT extends EventRAT implements Serializable {
 	
 	private int keyCode;
+	private static final long serialVersionUID = 1L;
 	
 	public KeyEventRAT(int keyCode){
 		this.setKeyCode(keyCode);
