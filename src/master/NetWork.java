@@ -27,22 +27,10 @@ public class NetWork implements Runnable{
     private ImageIcon image;
 	
 	
-	public NetWork(ImageIcon image){
+	public NetWork(ImageIcon image,int port){
+		this.port = port;
 		this.image = image;
 		run = false;
-	}
-	/**
-	 * Setup the serversocket and make it ready to receive connections
-	 */
-	public void startServer(){
-		try{
-			ss = new ServerSocket(port);
-			run = true;
-		} 
-		catch (IOException ex){
-			System.err.println(ex.getMessage());
-			run = false;
-		} 
 	}
 	/**
 	 * Send a object of KeyEventRAT/MouseEventRAT to the slave to execute
@@ -65,19 +53,35 @@ public class NetWork implements Runnable{
 		t.start();
 	}
 	public void run(){
-		BufferedReader in = null;
+		try{
+			ss = new ServerSocket(port);
+			run = true;
+		} 
+		catch (IOException ex){
+			System.err.println(ex.getMessage());
+			run = false;
+		} 
+		
 		EventRAT inputPackage;
 		try {
 			System.out.println("Waiting for connection");
 			s = ss.accept();
 			System.out.println("Connection establish");
-			in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+			
+			System.out.println("[INFO] - Creating input and output streams");
+			oout = new ObjectOutputStream(s.getOutputStream());
+            oin = new ObjectInputStream(s.getInputStream());
+            System.out.println("[INFO] - Done creating input and output streams");
+            
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
+		
+		
 		try{
 			//Loop forever and ever.
 			while(run && ((inputPackage=(EventRAT)oin.readObject()) != null )){
+				System.out.println("[INFO] - Inside the loop");
 				//Check what kind of package we got
 				if(inputPackage instanceof KeyEventRAT){
 					//We got an keyevent
@@ -89,6 +93,7 @@ public class NetWork implements Runnable{
 				}
 				else if(inputPackage instanceof PictureEventRAT){
 					image = ((PictureEventRAT) inputPackage).getIi();
+					System.out.println("[INFO] - Got and picture");
 					//Now do somehthing with the picture that just we got
 				}
 				else{
@@ -107,7 +112,9 @@ public class NetWork implements Runnable{
 		//Finally close all the stuff that we opened
 		finally{
 			try{
-				in.close();
+				//in.close();
+				oout.close();
+				oin.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

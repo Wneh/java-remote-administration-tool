@@ -39,7 +39,7 @@ public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListen
 		c.setLayout(new BorderLayout());
 		
 		//String host = JOptionPane.showInputDialog("IP:");
-		nw = new NetWork(ii);
+		nw = new NetWork(ii,2000);
 		
 		//ir = new ImageReceiver(host,2000);
 		tf = new JTextField();
@@ -54,6 +54,8 @@ public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListen
 		p.addMouseListener(this);
 		
 		//cs = new CommandSender(host,2001);	
+		
+		nw.startRun();
 		
 		setSize(800,600);
 		setTitle("R.A.T by Carl Eriksson");

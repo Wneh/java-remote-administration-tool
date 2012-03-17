@@ -14,6 +14,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 import netPack.EventRAT;
 import netPack.PictureEventRAT;
@@ -63,20 +64,13 @@ public class NetWork implements Runnable {
 		run = false;
 		
 		try {
-			s = new Socket(InetAddress.getByName(host),port);
 			erh = new EventRATHandler();
 			r = new Robot();
-			startRun();
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+			startRun();	
 		} catch (AWTException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
 	}
 	/**
 	 * Execute the thread start.
@@ -97,27 +91,31 @@ public class NetWork implements Runnable {
 	public void run(){
 		//Setup all the steams       
 		try {
+			s = new Socket(host,port);
+			
 			oout = new ObjectOutputStream(s.getOutputStream());
-			oin = new ObjectInputStream(s.getInputStream());			
+			oin = new ObjectInputStream(s.getInputStream());	
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
 		run = true;
+		System.out.println("[INFO] - Before loop");
 		
 		EventRAT inputPackage;
 		try {
 			//Receive commands to execute and send pictures of the screen back
-			while(run && ((inputPackage=(EventRAT)oin.readObject()) != null )){
+			//while(run && ((inputPackage=(EventRAT)oin.readObject()) != null )){
+			while(run){
 				//Send a picture
+				System.out.println("[INFO] - Start sending picture");
 				oout.writeObject(new PictureEventRAT(getScreen()));
+				System.out.println("[INFO] - Done sending picture");
 				//Receive any incoming commands	
-				erh.handleEvent(inputPackage);				
+				//erh.handleEvent(inputPackage);				
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
