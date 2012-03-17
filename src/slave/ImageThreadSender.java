@@ -44,13 +44,13 @@ public class ImageThreadSender extends Thread {
 			s = new Socket(host,port);
 			
 			oout = new ObjectOutputStream(s.getOutputStream());
-			oout.flush();
 			oin = new ObjectInputStream(s.getInputStream());
 			
 			while(run){
 				//Keep sending pictures to the server as fast as possible
 				System.out.println("[INFO] - Start sending picture");
 				oout.writeObject(new PictureEventRAT(this.getScreen()));
+				oout.flush();
 				System.out.println("[INFO] - Done sending picture");
 			}
 			

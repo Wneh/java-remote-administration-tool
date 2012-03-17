@@ -42,6 +42,7 @@ public class EventRATHandler {
 	 * @param mer And object of MouseEventRAT class
 	 */
 	private void executeMouse(MouseEventRAT mer){
+		System.out.println("[INFO] - Got and MOUSE event");
 		//Check if the mouse was clicked
 		if(mer.isMouseClicked()){
 			//Left click
@@ -54,8 +55,10 @@ public class EventRATHandler {
 			}	
 		}
 		//Check if the mouse were moved
-		if(mer.isMouseClicked()){
+		if(mer.isMouseMoved()){
+			System.out.println("[INFO] - Before moving mouse");
 			rs.moveMouse(mer.getX(),mer.getY());
+			System.out.println("[INFO] - After moving mouse");
 		}
 	}
 	/**
@@ -63,6 +66,7 @@ public class EventRATHandler {
 	 * @param ker An object of KeyEventRAT class
 	 */
 	private void executeKey(KeyEventRAT ker){
+		System.out.println("[INFO] - Got and KEY event");
 		rs.typeKey(ker.getKeyCode());
 	}
 

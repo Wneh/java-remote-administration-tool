@@ -13,7 +13,6 @@ public class GUISLAVE extends JFrame implements ActionListener,WindowListener{
 	private JPanel center,south;
 	private String IP;
 	private String NAME;
-	private NetWork nw;
 
 	public GUISLAVE(){
 		Container c = getContentPane();
@@ -47,10 +46,17 @@ public class GUISLAVE extends JFrame implements ActionListener,WindowListener{
 		
 		String host = JOptionPane.showInputDialog(null,"Host:");
 		
-		//nw = new NetWork(host,2000);
+		
 		ImageThreadSender its = new ImageThreadSender(host,2000);
-		Thread t = new Thread(its);
-		t.start();
+		Thread t1 = new Thread(its);
+		
+		t1.start();
+		
+		CommandThreadReceiver ctr = new CommandThreadReceiver(host,2000);
+		Thread t2 = new Thread(ctr);
+		
+		t2.start();
+		
 	}
 	
 	public static void main(String[] args) {
