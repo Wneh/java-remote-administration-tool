@@ -20,6 +20,7 @@ public class RobotSteer{
 			rBot = new Robot();
 		}
 		 catch (AWTException e) { 
+			 System.err.println("[ERROR] - Could not create the robot object");
 			 e.printStackTrace(); 
 		 } 
 	}
@@ -45,6 +46,7 @@ public class RobotSteer{
 	 * @param y
 	 */
 	public void moveMouse(int x, int y){
+		System.out.println("[INFO] - Moving mouse to X: "+x+" Y: "+y);
 		rBot.mouseMove(x, y);
 	}
 	/**
