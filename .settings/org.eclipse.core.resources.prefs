@@ -1,10 +1,4 @@
-#Thu Apr 28 10:12:02 CEST 2011
 eclipse.preferences.version=1
-encoding//src/master/CommandSender.java=UTF-8
 encoding//src/master/GUIMASTER.java=UTF-8
-encoding//src/master/ImageReceiver.java=UTF-8
-encoding//src/slave/CommandReceiver.java=UTF-8
 encoding//src/slave/GUISLAVE.java=UTF-8
-encoding//src/slave/ImageSender.java=UTF-8
-encoding//src/slave/NetWork.java=UTF-8
 encoding//src/slave/RobotSteer.java=UTF-8

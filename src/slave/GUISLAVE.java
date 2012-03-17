@@ -13,7 +13,6 @@ public class GUISLAVE extends JFrame implements ActionListener,WindowListener{
 	private JPanel center,south;
 	private String IP;
 	private String NAME;
-	private NetWork nw;
 
 	public GUISLAVE(){
 		Container c = getContentPane();
@@ -45,7 +44,19 @@ public class GUISLAVE extends JFrame implements ActionListener,WindowListener{
 		setTitle("R.A.T by Carl Eriksson");
 		setSize(300,100);
 		
-		nw = new NetWork();
+		String host = JOptionPane.showInputDialog(null,"Host:");
+		
+		
+		ImageThreadSender its = new ImageThreadSender(host,2000);
+		Thread t1 = new Thread(its);
+		
+		t1.start();
+		
+		CommandThreadReceiver ctr = new CommandThreadReceiver(host,2000);
+		Thread t2 = new Thread(ctr);
+		
+		t2.start();
+		
 	}
 	
 	public static void main(String[] args) {
@@ -73,7 +84,7 @@ public class GUISLAVE extends JFrame implements ActionListener,WindowListener{
 
 	@Override
 	public void windowClosing(WindowEvent e) {
-		nw.closeAll();	
+		//nw.closeAll();	
 	}
 
 	@Override
