@@ -52,5 +52,20 @@ public class CommandThreadReceiver extends Thread {
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * Stops the thread, streams and socket
+	 */
+	public void stopThread(){
+		run = false;
+		try {
+			oout.flush();
+			oout.close();
+			oin.close();
+			s.close();
+		} catch (IOException e) {
+			System.err.println("[ERROR] - Failed to close the streams or socket in CommandThreadReceiver");
+			e.printStackTrace();
+		}
+	}
 
 }

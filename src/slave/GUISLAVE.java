@@ -13,6 +13,8 @@ public class GUISLAVE extends JFrame implements ActionListener,WindowListener{
 	private JPanel center,south;
 	private String IP;
 	private String NAME;
+	
+	private RemoteHandler rh;
 
 	public GUISLAVE(){
 		Container c = getContentPane();
@@ -47,7 +49,7 @@ public class GUISLAVE extends JFrame implements ActionListener,WindowListener{
 		String host = JOptionPane.showInputDialog(null,"Host:");
 		
 		
-		ImageThreadSender its = new ImageThreadSender(host,2000);
+		/*ImageThreadSender its = new ImageThreadSender(host,2000);
 		Thread t1 = new Thread(its);
 		
 		t1.start();
@@ -55,8 +57,11 @@ public class GUISLAVE extends JFrame implements ActionListener,WindowListener{
 		CommandThreadReceiver ctr = new CommandThreadReceiver(host,2000);
 		Thread t2 = new Thread(ctr);
 		
-		t2.start();
+		t2.start();*/
 		
+		rh = new RemoteHandler(host,2000);
+		rh.initializeThreads();
+		rh.startThreads();
 	}
 	
 	public static void main(String[] args) {
@@ -66,6 +71,7 @@ public class GUISLAVE extends JFrame implements ActionListener,WindowListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == quit){
+			rh.stopThreads();
 			System.exit(0);
 		}
 	}
