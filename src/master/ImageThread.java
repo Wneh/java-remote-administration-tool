@@ -54,4 +54,23 @@ public class ImageThread extends Thread{
 			System.err.println("[ERROR] - Uknown class reciveved");
 		}
 	}
+	/**
+	 * Stops the thread by setting run = false;
+	 * and closing all the streams and socket.
+	 */
+	public void stopThread(){
+		run = false;
+		//And try closing the streams and socket.
+		try{
+			oin.close();
+			oout.flush();
+			oout.close();
+			s.close();
+		}catch (IOException e) {
+			System.err.println("[ERROR] - Failed to close the streams in ImageThread");
+			e.printStackTrace();
+		}
+		
+		
+	}
 }
