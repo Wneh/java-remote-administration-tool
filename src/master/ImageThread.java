@@ -4,10 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-
-import netPack.EventRAT;
 import netPack.PictureEventRAT;
 
 public class ImageThread extends Thread{
@@ -70,7 +67,5 @@ public class ImageThread extends Thread{
 			System.err.println("[ERROR] - Failed to close the streams in ImageThread");
 			e.printStackTrace();
 		}
-		
-		
 	}
 }

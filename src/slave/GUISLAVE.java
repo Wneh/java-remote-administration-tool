@@ -47,18 +47,7 @@ public class GUISLAVE extends JFrame implements ActionListener,WindowListener{
 		setSize(300,100);
 		
 		String host = JOptionPane.showInputDialog(null,"Host:");
-		
-		
-		/*ImageThreadSender its = new ImageThreadSender(host,2000);
-		Thread t1 = new Thread(its);
-		
-		t1.start();
-		
-		CommandThreadReceiver ctr = new CommandThreadReceiver(host,2000);
-		Thread t2 = new Thread(ctr);
-		
-		t2.start();*/
-		
+				
 		rh = new RemoteHandler(host,2000);
 		rh.initializeThreads();
 		rh.startThreads();
