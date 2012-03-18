@@ -47,4 +47,15 @@ public class NetWork{
 			ct.sendCommand(toSend);
 		}
 	}
+	/**
+	 * Closing the threads.
+	 */
+	public void closeAllThreads(){
+		if(ct != null){
+			ct.stopThread();
+		}
+		if(it != null){
+			it.stopThread();
+		}
+	}
 }
