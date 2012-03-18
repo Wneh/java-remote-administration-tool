@@ -33,6 +33,7 @@ public class CommandThread extends Thread{
 		while(run){
 			//Do nothing atm.
 		}
+		
 	}
 	/**
 	 * Send a object of KeyEventRAT/MouseEventRAT to the slave to execute
@@ -49,6 +50,23 @@ public class CommandThread extends Thread{
 			catch (IOException e){
 				e.printStackTrace();
 			}
+		}
+	}
+	/**
+	 * Stops the thread by setting run = false;
+	 * and closing all the streams and socket.
+	 */
+	public void stopThread(){
+		run = false;
+		
+		try {
+			oout.flush();
+			oout.close();
+			oin.close();
+			s.close();
+		} catch (IOException e) {
+			System.err.println("[ERROR] - Failed to close the streams in CommandThread");
+			e.printStackTrace();
 		}
 	}
 
