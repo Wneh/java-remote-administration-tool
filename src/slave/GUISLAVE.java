@@ -16,7 +16,7 @@ public class GUISLAVE extends JFrame implements ActionListener,WindowListener{
 	
 	private RemoteHandler rh;
 
-	public GUISLAVE(){
+	public GUISLAVE(String host){
 		Container c = getContentPane();
 		c.setLayout(new BorderLayout());
 		try{
@@ -46,7 +46,7 @@ public class GUISLAVE extends JFrame implements ActionListener,WindowListener{
 		setTitle("R.A.T by Carl Eriksson");
 		setSize(300,100);
 		
-		String host = JOptionPane.showInputDialog(null,"Host:");
+		//String host = JOptionPane.showInputDialog(null,"Host:");
 				
 		rh = new RemoteHandler(host,2000);
 		rh.initializeThreads();
@@ -54,7 +54,12 @@ public class GUISLAVE extends JFrame implements ActionListener,WindowListener{
 	}
 	
 	public static void main(String[] args) {
-		new GUISLAVE();
+		if(args.length > 0){
+			new GUISLAVE(args[0]);
+		}
+		else{
+			new GUISLAVE(JOptionPane.showInputDialog(null,"Host:"));
+		}
 	}
 
 	@Override

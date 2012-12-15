@@ -1,6 +1,7 @@
 package master;
 
 import java.awt.BorderLayout;
+import java.awt.Point;
 
 import java.awt.Container;
 import java.awt.event.KeyEvent;
@@ -30,6 +31,7 @@ public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListen
 	NetWork nw;
 	ImageIcon ii;
 	JLabel jl;
+	JScrollPane p;
 	
 	public GUIMASTER(){
 		
@@ -39,7 +41,7 @@ public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListen
 		tf = new JTextField();
 		jl = new JLabel();
 		jl.setIcon(this.ii);
-		JScrollPane p = new JScrollPane(jl);
+		p = new JScrollPane(jl);
 		c.add(p,BorderLayout.CENTER);
 		c.add(tf,BorderLayout.SOUTH);
 		
@@ -96,9 +98,12 @@ public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListen
 	}
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-		setTitle("X: "+e.getX()+" , Y: "+e.getY());
-		nw.sendCommand(new MouseEventRAT(e.getX(),e.getY()));
+		//Get the viewport of the jscrollpane to see if we want to add some
+		//to the coordinates
+		Point tempPoint = p.getViewport().getViewPosition();
+		
+		setTitle("X: "+((int)tempPoint.getX()+e.getX())+" , Y: "+((int)tempPoint.getY()+e.getY()));
+		nw.sendCommand(new MouseEventRAT(((int)tempPoint.getX()+e.getX()),((int)tempPoint.getY()+e.getY())));
 	}
 	@Override
 	public void keyPressed(KeyEvent key) {
