@@ -1,20 +1,23 @@
 package master;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.InputStream;
 import java.net.Socket;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import netPack.PictureEventRAT;
 
 public class ImageThread extends Thread{
 	
 	private JLabel jl;
 	private Socket s;
-	private boolean run;
-	private ObjectInputStream oin;
-	private ObjectOutputStream oout;
-	
+	private boolean run;	
+	private InputStream in;
+	private DataInputStream dis;
 	/*
 	 * Will keep receiving images from the slave threw a socket connection
 	 * and set the image to the ImageIcon that comes from the GUIMASTER class
@@ -22,35 +25,49 @@ public class ImageThread extends Thread{
 	public ImageThread(Socket s,JLabel jl){
 		this.s = s;
 		this.jl = jl;
-		
-		//Try setting up the streams
-		try {
-			oout = new ObjectOutputStream(s.getOutputStream());			
-			oin = new ObjectInputStream(s.getInputStream());
-		} catch (IOException e) {
-			System.err.println("[ERROR] - Error trying to setup the objects streams");
-		}
 	}
 	
 	public void run(){
 		run = true;
-		PictureEventRAT inputPic;
+		byte[] imageByte;
 		
 		//Loop and update the incoming pictures for ever and ever until we say stop.
-		try {
-			while (run && ((inputPic = (PictureEventRAT)oin.readObject()) != null)){
+		try {	
+			in = s.getInputStream();
+		    dis = new DataInputStream(in);
+		    
+			
+			while (run && ((imageByte = readBytes()) != null)){
 				//Grab the picture and set it into the ImageIcon
 				System.out.println("[INFO] - start picture");
-				jl.setIcon(inputPic.getIi());
+				//Start converting the image
+				InputStream inImage = new ByteArrayInputStream(imageByte);
+				BufferedImage bi = ImageIO.read(inImage);
+				//Create and ImageIcon from the BufferedImage and display it.
+				jl.setIcon(new ImageIcon(bi));
 				System.out.println("[INFO] - stop picture");
 			}
 		} catch (IOException e) {
 			System.err.println("[ERROR] - IOException in reciveving the picture");
 			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			System.err.println("[ERROR] - Uknown class reciveved");
 		}
 	}
+	/**
+	 * Help function that reads bytes from the DataInputStream
+	 * First it reads an integer that represent how many bytes to read
+	 * 
+	 * @return The image in an byte array
+	 * @throws IOException
+	 */
+	private byte[] readBytes() throws IOException {  
+	    int len = dis.readInt();
+	    byte[] data = new byte[len];
+	    if (len > 0) {
+	        dis.readFully(data);
+	    }
+	    return data;
+	}
+	
 	/**
 	 * Stops the thread by setting run = false;
 	 * and closing all the streams and socket.
@@ -59,9 +76,8 @@ public class ImageThread extends Thread{
 		run = false;
 		//And try closing the streams and socket.
 		try{
-			oin.close();
-			oout.flush();
-			oout.close();
+			in.close();
+			dis.close();
 			s.close();
 		}catch (IOException e) {
 			System.err.println("[ERROR] - Failed to close the streams in ImageThread");

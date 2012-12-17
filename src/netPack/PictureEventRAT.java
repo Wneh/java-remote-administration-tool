@@ -14,6 +14,9 @@ public class PictureEventRAT extends EventRAT implements Serializable{
 	public PictureEventRAT(ImageIcon inputImage){
 		this.setIi(inputImage);
 	}
+	public PictureEventRAT(BufferedImage inpuImage){
+		this.setBi(inpuImage);
+	}
 	
 	public ImageIcon getIi() {
 		return ii;
