@@ -13,9 +13,11 @@ public class NetWork{
 	private CommandThread ct;
 	private Thread ti;
 	private Thread tt;
+	public boolean CONNECTED;
 	 
 	
 	public NetWork(JLabel jl,int port){
+		CONNECTED = false;
 		this.port = port;
 		Socket s1,s2;
 		
@@ -42,8 +44,8 @@ public class NetWork{
 		} 
 	}
 	public void sendCommand(EventRAT toSend){
-		//Check so the CommandThread is created properly
-		if(ct != null){
+		//Check so the CommandThread is created properly and we are CONNECTED
+		if(ct != null && CONNECTED){
 			ct.sendCommand(toSend);
 		}
 	}
@@ -51,11 +53,14 @@ public class NetWork{
 	 * Closing the threads.
 	 */
 	public void closeAllThreads(){
+		//Close the threads
 		if(ct != null){
 			ct.stopThread();
 		}
 		if(it != null){
 			it.stopThread();
 		}
+		//And set that we are not connected
+		CONNECTED = false;
 	}
 }

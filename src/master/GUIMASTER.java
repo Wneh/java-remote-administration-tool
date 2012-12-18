@@ -49,12 +49,12 @@ public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListen
 		tf.addKeyListener(this);
 		p.addMouseListener(this);
 		
-		nw = new NetWork(this.jl,2000);
-		
 		setSize(800,600);
 		setTitle("R.A.T by Carl Eriksson");
 		setVisible(true);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);		
+		setDefaultCloseOperation(EXIT_ON_CLOSE);	
+		
+		nw = new NetWork(this.jl,2000);
 	}
 	public static void main(String[] arg){
 		new GUIMASTER();
@@ -62,14 +62,16 @@ public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListen
 	
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		if(arg0.getButton() == MouseEvent.BUTTON1){
-			//leftclicked
-			nw.sendCommand(new MouseEventRAT(1));
+		if(nw != null){
+			if(arg0.getButton() == MouseEvent.BUTTON1){
+				//leftclicked
+				nw.sendCommand(new MouseEventRAT(1));
+			}
+			else if(arg0.getButton() == MouseEvent.BUTTON3){
+				//rightclicked
+				nw.sendCommand(new MouseEventRAT(3));
+			}		
 		}
-		else if(arg0.getButton() == MouseEvent.BUTTON3){
-			//rightclicked
-			nw.sendCommand(new MouseEventRAT(3));
-		}		
 	}
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
@@ -98,18 +100,22 @@ public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListen
 	}
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		//Get the viewport of the jscrollpane to see if we want to add some
-		//to the coordinates
-		Point tempPoint = p.getViewport().getViewPosition();
-		
-		setTitle("X: "+((int)tempPoint.getX()+e.getX())+" , Y: "+((int)tempPoint.getY()+e.getY()));
-		nw.sendCommand(new MouseEventRAT(((int)tempPoint.getX()+e.getX()),((int)tempPoint.getY()+e.getY())));
+		if(nw != null){
+			//Get the viewport of the jscrollpane to see if we want to add some
+			//to the coordinates
+			Point tempPoint = p.getViewport().getViewPosition();
+			
+			setTitle("X: "+((int)tempPoint.getX()+e.getX())+" , Y: "+((int)tempPoint.getY()+e.getY()));
+			nw.sendCommand(new MouseEventRAT(((int)tempPoint.getX()+e.getX()),((int)tempPoint.getY()+e.getY())));
+		}
 	}
 	@Override
 	public void keyPressed(KeyEvent key) {
-		int keyCode = key.getKeyCode();
-		nw.sendCommand(new KeyEventRAT(keyCode));
-		setTitle("Key: "+key.getKeyCode());
+		if(nw != null){
+			int keyCode = key.getKeyCode();
+			nw.sendCommand(new KeyEventRAT(keyCode));
+			setTitle("Key: "+key.getKeyCode());
+		}
 	}
 	@Override
 	public void keyReleased(KeyEvent arg0) {
