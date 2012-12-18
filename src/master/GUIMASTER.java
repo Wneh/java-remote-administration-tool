@@ -27,11 +27,13 @@ import netPack.MouseEventRAT;
 @SuppressWarnings("serial")
 public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListener,KeyListener,WindowListener {
 	
-	JTextField tf;
-	NetWork nw;
-	ImageIcon ii;
-	JLabel jl;
-	JScrollPane p;
+	public JTextField tf;
+	public NetWork nw;
+	public ImageIcon ii;
+	public JLabel jl;
+	public JScrollPane p;
+	
+	public GUIStatus guis;	
 	
 	public GUIMASTER(){
 		
@@ -54,7 +56,8 @@ public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListen
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);	
 		
-		nw = new NetWork(this.jl,2000);
+		guis = new GUIStatus(this);
+		nw = new NetWork(this.jl,2000,guis);
 	}
 	public static void main(String[] arg){
 		new GUIMASTER();

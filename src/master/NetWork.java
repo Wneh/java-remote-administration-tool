@@ -14,15 +14,18 @@ public class NetWork{
 	private Thread ti;
 	private Thread tt;
 	public boolean CONNECTED;
+	private GUIStatus guis;
 	 
 	
-	public NetWork(JLabel jl,int port){
+	public NetWork(JLabel jl,int port,GUIStatus guis){
 		CONNECTED = false;
 		this.port = port;
+		this.guis = guis;
 		Socket s1,s2;
 		
 		//Wait for the connections for the picture and command sockets
 		try{
+			guis.showWaitingForConnection();
 			ss = new ServerSocket(this.port);
 			
 			System.out.println("Waiting for connection");
@@ -38,6 +41,8 @@ public class NetWork{
 				tt = new Thread(ct);
 				tt.start();
 			System.out.println("Done with command");
+			guis.setStatus("Connected to " + s1.getInetAddress());
+			CONNECTED = true;
 		} 
 		catch (IOException ex){
 			System.err.println(ex.getMessage());
