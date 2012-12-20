@@ -27,7 +27,6 @@ import netPack.MouseEventRAT;
 @SuppressWarnings("serial")
 public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListener,KeyListener,WindowListener {
 	
-	public JTextField tf;
 	public NetWork nw;
 	public ImageIcon ii;
 	public JLabel jl;
@@ -40,15 +39,15 @@ public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListen
 		Container c = getContentPane();
 		c.setLayout(new BorderLayout());
 		
-		tf = new JTextField();
 		jl = new JLabel();
 		jl.setIcon(this.ii);
 		p = new JScrollPane(jl);
 		c.add(p,BorderLayout.CENTER);
-		c.add(tf,BorderLayout.SOUTH);
+		p.setFocusable(true);
 		
 		p.addMouseMotionListener(this);
-		tf.addKeyListener(this);
+		//tf.addKeyListener(this);
+		p.addKeyListener(this);
 		p.addMouseListener(this);
 		
 		setSize(800,600);
@@ -118,6 +117,9 @@ public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListen
 			int keyCode = key.getKeyCode();
 			nw.sendCommand(new KeyEventRAT(keyCode));
 			setTitle("Key: "+key.getKeyCode());
+		}
+		else{
+			JOptionPane.showMessageDialog(null,key.getKeyCode());
 		}
 	}
 	@Override

@@ -32,6 +32,12 @@ public class CommandThread extends Thread{
 		//Since we don't need to recieve commands we just do a dummy loop
 		while(run){
 			//Do nothing atm.
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 	}
