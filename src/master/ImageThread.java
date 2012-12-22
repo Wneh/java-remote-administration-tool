@@ -18,13 +18,15 @@ public class ImageThread extends Thread{
 	private boolean run;	
 	private InputStream in;
 	private DataInputStream dis;
+	private GUIMASTER parent;
 	/*
 	 * Will keep receiving images from the slave threw a socket connection
 	 * and set the image to the ImageIcon that comes from the GUIMASTER class
 	 */
-	public ImageThread(Socket s,JLabel jl){
+	public ImageThread(Socket s,JLabel jl,GUIMASTER parent){
 		this.s = s;
 		this.jl = jl;
+		this.parent = parent;
 	}
 	
 	public void run(){
@@ -49,7 +51,11 @@ public class ImageThread extends Thread{
 			}
 		} catch (IOException e) {
 			System.err.println("[ERROR] - IOException in reciveving the picture");
-			e.printStackTrace();
+			//e.printStackTrace();
+			parent.resetNetwork();
+		}
+		finally{
+			stopThread();
 		}
 	}
 	/**
@@ -81,7 +87,8 @@ public class ImageThread extends Thread{
 			s.close();
 		}catch (IOException e) {
 			System.err.println("[ERROR] - Failed to close the streams in ImageThread");
-			e.printStackTrace();
+			parent.resetNetwork();
+			//e.printStackTrace();
 		}
 	}
 }

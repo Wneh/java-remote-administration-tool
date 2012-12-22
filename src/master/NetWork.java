@@ -14,34 +14,34 @@ public class NetWork{
 	private Thread ti;
 	private Thread tt;
 	public boolean CONNECTED;
-	private GUIStatus guis;
+	private GUIMASTER parent;
 	 
 	
-	public NetWork(JLabel jl,int port,GUIStatus guis){
+	public NetWork(JLabel jl,int port,GUIMASTER parent){
 		CONNECTED = false;
 		this.port = port;
-		this.guis = guis;
+		this.parent = parent;
 		Socket s1,s2;
 		
 		//Wait for the connections for the picture and command sockets
 		try{
-			guis.showWaitingForConnection();
+			parent.guis.showWaitingForConnection();
 			ss = new ServerSocket(this.port);
 			
 			System.out.println("Waiting for connection");
 			System.out.println("Setting up image connection");
 				s1 = ss.accept();
-				it = new ImageThread(s1,jl);
+				it = new ImageThread(s1,jl,parent);
 				ti = new Thread(it);
 				ti.start();
 			System.out.println("Done with image");
 			System.out.println("Setting up command connection");
 				s2 = ss.accept();
-				ct = new CommandThread(s2);
+				ct = new CommandThread(s2,parent);
 				tt = new Thread(ct);
 				tt.start();
 			System.out.println("Done with command");
-			guis.setStatus("Connected to " + s1.getInetAddress());
+			parent.guis.setStatus("Connected to " + s1.getInetAddress());
 			CONNECTED = true;
 		} 
 		catch (IOException ex){

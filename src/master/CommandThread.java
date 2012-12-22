@@ -13,9 +13,10 @@ public class CommandThread extends Thread{
 	private boolean run;
 	private ObjectInputStream oin;
 	private ObjectOutputStream oout;
+	private GUIMASTER parent;
 	
-	public CommandThread(Socket s){
-
+	public CommandThread(Socket s,GUIMASTER parent){
+		this.parent = parent;
 		this.s = s;
 		
 		//Try setting up the streams
@@ -24,6 +25,7 @@ public class CommandThread extends Thread{
 			oin = new ObjectInputStream(s.getInputStream());
 		} catch (IOException e) {
 			System.err.println("[ERROR] - Error trying to setup the objects streams");
+			parent.resetNetwork();
 		}	
 	}
 	public void run(){
@@ -54,7 +56,12 @@ public class CommandThread extends Thread{
 				oout.flush();
 			} 
 			catch (IOException e){
-				e.printStackTrace();
+				//e.printStackTrace();
+				//Something went wrong to reset and wait for the connection again.
+				parent.resetNetwork();
+			}
+			finally{
+				this.stopThread();
 			}
 		}
 	}
@@ -72,7 +79,8 @@ public class CommandThread extends Thread{
 			s.close();
 		} catch (IOException e) {
 			System.err.println("[ERROR] - Failed to close the streams in CommandThread");
-			e.printStackTrace();
+			//e.printStackTrace();
+			parent.resetNetwork();
 		}
 	}
 

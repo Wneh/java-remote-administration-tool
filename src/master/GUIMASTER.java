@@ -46,7 +46,6 @@ public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListen
 		p.setFocusable(true);
 		
 		p.addMouseMotionListener(this);
-		//tf.addKeyListener(this);
 		p.addKeyListener(this);
 		p.addMouseListener(this);
 		
@@ -56,10 +55,14 @@ public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListen
 		setDefaultCloseOperation(EXIT_ON_CLOSE);	
 		
 		guis = new GUIStatus(this);
-		nw = new NetWork(this.jl,2000,guis);
+		nw = new NetWork(this.jl,2000,this);
 	}
 	public static void main(String[] arg){
 		new GUIMASTER();
+	}
+	public void resetNetwork(){
+		jl.setIcon(null);
+		nw = new NetWork(this.jl,2000,this);
 	}
 	
 	@Override
