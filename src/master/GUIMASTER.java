@@ -62,6 +62,11 @@ public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListen
 	}
 	public void resetNetwork(){
 		jl.setIcon(null);
+		nw.closeAllThreads();
+		guis.closeThread();
+		guis = null;
+		guis = new GUIStatus(this);
+		nw = null;
 		nw = new NetWork(this.jl,2000,this);
 	}
 	

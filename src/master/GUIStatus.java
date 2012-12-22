@@ -22,6 +22,9 @@ public class GUIStatus {
 		rt.stopRun();
 		main.setTitle(STATUS_PREFIX + status);
 	}
+	public void closeThread(){
+		rt.stopRun();
+	}
 	
 	/**
 	 * This inner class is used for loopting the spinning circle while the master is wating for connections

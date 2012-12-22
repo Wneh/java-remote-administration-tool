@@ -60,9 +60,6 @@ public class CommandThread extends Thread{
 				//Something went wrong to reset and wait for the connection again.
 				parent.resetNetwork();
 			}
-			finally{
-				this.stopThread();
-			}
 		}
 	}
 	/**
@@ -71,7 +68,6 @@ public class CommandThread extends Thread{
 	 */
 	public void stopThread(){
 		run = false;
-		
 		try {
 			oout.flush();
 			oout.close();
@@ -80,7 +76,7 @@ public class CommandThread extends Thread{
 		} catch (IOException e) {
 			System.err.println("[ERROR] - Failed to close the streams in CommandThread");
 			//e.printStackTrace();
-			parent.resetNetwork();
+			//parent.resetNetwork();
 		}
 	}
 

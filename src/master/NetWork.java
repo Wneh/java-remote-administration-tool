@@ -58,6 +58,14 @@ public class NetWork{
 	 * Closing the threads.
 	 */
 	public void closeAllThreads(){
+		//Close the serversocket
+		try {
+			ss.close();
+			ss = null;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		//Close the threads
 		if(ct != null){
 			ct.stopThread();
