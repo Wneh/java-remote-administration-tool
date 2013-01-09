@@ -72,16 +72,7 @@ public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListen
 	
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		if(nw != null){
-			if(arg0.getButton() == MouseEvent.BUTTON1){
-				//leftclicked
-				nw.sendCommand(new MouseEventRAT(1));
-			}
-			else if(arg0.getButton() == MouseEvent.BUTTON3){
-				//rightclicked
-				nw.sendCommand(new MouseEventRAT(3));
-			}		
-		}
+
 	}
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
@@ -95,12 +86,31 @@ public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListen
 	}
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("Mouse keypressed down");
+		if(nw != null){
+			if(arg0.getButton() == MouseEvent.BUTTON1){
+				//leftclicked
+				nw.sendMouseClick((byte)1,(byte)1);
+			}
+			else if(arg0.getButton() == MouseEvent.BUTTON3){
+				//rightclicked
+				nw.sendMouseClick((byte)3,(byte)1);
+			}		
+		}
 	}
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+		System.out.println("Mouse keypressed released");
+		if(nw != null){
+			if(arg0.getButton() == MouseEvent.BUTTON1){
+				//leftclicked
+				nw.sendMouseClick((byte)1,(byte)0);
+			}
+			else if(arg0.getButton() == MouseEvent.BUTTON3){
+				//rightclicked
+				nw.sendMouseClick((byte)3,(byte)0);
+			}		
+		}
 		
 	}
 	@Override
@@ -116,24 +126,34 @@ public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListen
 			Point tempPoint = p.getViewport().getViewPosition();
 			
 			setTitle("X: "+((int)tempPoint.getX()+e.getX())+" , Y: "+((int)tempPoint.getY()+e.getY()));
-			nw.sendCommand(new MouseEventRAT(((int)tempPoint.getX()+e.getX()),((int)tempPoint.getY()+e.getY())));
+			//nw.sendCommand(new MouseEventRAT(((int)tempPoint.getX()+e.getX()),((int)tempPoint.getY()+e.getY())));
+			nw.sendMouseMove(((int)tempPoint.getX()+e.getX()), ((int)tempPoint.getY()+e.getY()));
 		}
 	}
 	@Override
 	public void keyPressed(KeyEvent key) {
 		if(nw != null){
 			int keyCode = key.getKeyCode();
-			nw.sendCommand(new KeyEventRAT(keyCode));
-			setTitle("Key: "+key.getKeyCode());
+			//nw.sendCommand(new KeyEventRAT(keyCode));
+			nw.sendKeyEvent(keyCode, (byte)1);
+			//setTitle("Key: "+key.getKeyCode());
 		}
 		else{
 			JOptionPane.showMessageDialog(null,key.getKeyCode());
 		}
 	}
 	@Override
-	public void keyReleased(KeyEvent arg0) {
+	public void keyReleased(KeyEvent key) {
 		// TODO Auto-generated method stub
-		
+		if(nw != null){
+			int keyCode = key.getKeyCode();
+			//nw.sendCommand(new KeyEventRAT(keyCode));
+			nw.sendKeyEvent(keyCode, (byte)0);
+			//setTitle("Key: "+key.getKeyCode());
+		}
+		else{
+			JOptionPane.showMessageDialog(null,key.getKeyCode());
+		}
 	}
 	@Override
 	public void keyTyped(KeyEvent arg0) {

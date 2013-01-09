@@ -48,12 +48,29 @@ public class NetWork{
 			System.err.println(ex.getMessage());
 		} 
 	}
-	public void sendCommand(EventRAT toSend){
-		//Check so the CommandThread is created properly and we are CONNECTED
+	public void sendKeyEvent(int keyCode,byte keyState){
 		if(ct != null && CONNECTED){
-			ct.sendCommand(toSend);
+			ct.sendKeyEvent(keyCode,keyState);
 		}
 	}
+	public void sendMouseMove(int x, int y){
+		if(ct != null && CONNECTED){
+			ct.sendMouseMove(x, y);
+		}
+	}
+	public void sendMouseClick(byte mouseKeyCode, byte mouseKeyState){
+		if(ct != null && CONNECTED){
+			ct.sendMouseClick(mouseKeyCode, mouseKeyState);
+		}
+	}
+	
+//	public void sendCommand(EventRAT toSend){
+//		//Check so the CommandThread is created properly and we are CONNECTED
+//		if(ct != null && CONNECTED){
+//			ct.sendCommand(toSend);
+//		}
+//	}
+	
 	/**
 	 * Closing the threads.
 	 */
