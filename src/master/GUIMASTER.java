@@ -126,7 +126,6 @@ public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListen
 			Point tempPoint = p.getViewport().getViewPosition();
 			
 			setTitle("X: "+((int)tempPoint.getX()+e.getX())+" , Y: "+((int)tempPoint.getY()+e.getY()));
-			//nw.sendCommand(new MouseEventRAT(((int)tempPoint.getX()+e.getX()),((int)tempPoint.getY()+e.getY())));
 			nw.sendMouseMove(((int)tempPoint.getX()+e.getX()), ((int)tempPoint.getY()+e.getY()));
 		}
 	}
@@ -134,9 +133,7 @@ public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListen
 	public void keyPressed(KeyEvent key) {
 		if(nw != null){
 			int keyCode = key.getKeyCode();
-			//nw.sendCommand(new KeyEventRAT(keyCode));
 			nw.sendKeyEvent(keyCode, (byte)1);
-			//setTitle("Key: "+key.getKeyCode());
 		}
 		else{
 			JOptionPane.showMessageDialog(null,key.getKeyCode());
@@ -147,9 +144,7 @@ public class GUIMASTER extends JFrame implements MouseListener,MouseMotionListen
 		// TODO Auto-generated method stub
 		if(nw != null){
 			int keyCode = key.getKeyCode();
-			//nw.sendCommand(new KeyEventRAT(keyCode));
 			nw.sendKeyEvent(keyCode, (byte)0);
-			//setTitle("Key: "+key.getKeyCode());
 		}
 		else{
 			JOptionPane.showMessageDialog(null,key.getKeyCode());

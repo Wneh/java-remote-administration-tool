@@ -87,8 +87,6 @@ public class ImageThread extends Thread{
 			s.close();
 		}catch (IOException e) {
 			System.err.println("[ERROR] - Failed to close the streams in ImageThread");
-			//parent.resetNetwork();
-			//e.printStackTrace();
 		}
 	}
 }

@@ -2,19 +2,14 @@ package master;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
-
-import netPack.EventRAT;
 
 public class CommandThread extends Thread{
 	
 	private Socket s;
 	private boolean run;
-	private ObjectInputStream oin;
-	private ObjectOutputStream oout;
+
 	private GUIMASTER parent;
 	
 	private DataOutputStream dos;
@@ -28,9 +23,6 @@ public class CommandThread extends Thread{
 		try {
 			out = s.getOutputStream(); 
 			dos = new DataOutputStream(out);
-			
-			//oout = new ObjectOutputStream(s.getOutputStream());			
-			//oin = new ObjectInputStream(s.getInputStream());
 		} catch (IOException e) {
 			System.err.println("[ERROR] - Error trying to setup the objects streams");
 			parent.resetNetwork();
@@ -101,30 +93,6 @@ public class CommandThread extends Thread{
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
-	
-	
-//	/**
-//	 * Send a object of KeyEventRAT/MouseEventRAT to the slave to execute
-//	 * @param toSend Instance of KeyEventRAT/MouseEventRAT
-//	 */
-//	public void sendCommand(EventRAT toSend){
-//		//Fast check that either the keyevent is null or the outputstream is
-//		if(toSend != null && oout != null){
-//			try{
-//				//Sends it out threw the outputsteam
-//				oout.writeObject(toSend);
-//				oout.flush();
-//			} 
-//			catch (IOException e){
-//				//e.printStackTrace();
-//				//Something went wrong to reset and wait for the connection again.
-//				parent.resetNetwork();
-//			}
-//		}
-//	}
 	/**
 	 * Stops the thread by setting run = false;
 	 * and closing all the streams and socket.
@@ -132,16 +100,11 @@ public class CommandThread extends Thread{
 	public void stopThread(){
 		run = false;
 		try {
-			//oout.flush();
-			//oout.close();
-			//oin.close();
 			out.close();
 			dos.close();		
 			s.close();
 		} catch (IOException e) {
 			System.err.println("[ERROR] - Failed to close the streams in CommandThread");
-			//e.printStackTrace();
-			//parent.resetNetwork();
 		}
 	}
 

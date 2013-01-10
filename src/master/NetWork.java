@@ -64,13 +64,6 @@ public class NetWork{
 		}
 	}
 	
-//	public void sendCommand(EventRAT toSend){
-//		//Check so the CommandThread is created properly and we are CONNECTED
-//		if(ct != null && CONNECTED){
-//			ct.sendCommand(toSend);
-//		}
-//	}
-	
 	/**
 	 * Closing the threads.
 	 */
