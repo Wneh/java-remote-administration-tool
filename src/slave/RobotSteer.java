@@ -65,30 +65,4 @@ public class RobotSteer{
 		System.out.println("[INFO] - Moving mouse to X: "+x+" Y: "+y);
 		rBot.mouseMove(x, y);
 	}
-	
-//	/**
-//	 * Left click on mouse
-//	 */
-//	public void clickLeft(){
-//		rBot.mousePress(InputEvent.BUTTON1_MASK);
-//		rBot.delay(100);
-//		rBot.mouseRelease(InputEvent.BUTTON1_MASK);
-//	}
-//	/**
-//	 * Right click the mouse
-//	 */
-//	public void clickRight(){
-//		rBot.mousePress(InputEvent.BUTTON3_MASK);
-//		rBot.delay(100);
-//		rBot.mouseRelease(InputEvent.BUTTON3_MASK);
-//	}	
-//	/**
-//	 * Simulate a keypress
-//	 * @param keyCode
-//	 */
-//	public void typeKey(int keyCode){
-//		rBot.keyPress(keyCode);
-//		rBot.delay(50);
-//		rBot.keyRelease(keyCode);
-//	}
 }
