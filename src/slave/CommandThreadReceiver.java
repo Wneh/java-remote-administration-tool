@@ -39,7 +39,7 @@ public class CommandThreadReceiver extends Thread {
 				System.out.println("[INFO] - start command");
 				
 				/**
-				 * The switch will continue reading input from the socket.
+				 * The switch will continue reading i"nput from the socket.
 				 * Depending on which kind of package what send we read different primitive types
 				 * 
 				 * For more information see the project wikipage:
