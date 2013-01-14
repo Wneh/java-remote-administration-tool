@@ -41,6 +41,7 @@ public class Client extends Thread {
 		initializeClient();
 		//Continue with the handshake!
 		running = doHandShake();
+	
 		
 	}
 	private boolean doHandShake(){
@@ -58,7 +59,7 @@ public class Client extends Thread {
 			content = dis.readByte();
 			//Lets check that packageID = 1 and content = 2
 			if(packageID == 1 && content == 2){
-				//Yes, continue sending the finall answer to the server with our name
+				//Yes, continue sending the final answer to the server with our name
 				//PackageID = 1
 				dos.writeByte(1);
 				writeString(name);
@@ -75,9 +76,7 @@ public class Client extends Thread {
 	 * creates all the streams.
 	 */
 	private void initializeClient(){
-		
-		running = true;
-		
+		running = true;	
 		try {
 			s = new Socket(ip,port);
 			
