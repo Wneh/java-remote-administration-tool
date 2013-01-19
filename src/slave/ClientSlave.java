@@ -9,7 +9,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class Client extends Thread {
+public class ClientSlave extends Thread {
 	
 	private String ip;
 	private int port;
@@ -23,14 +23,14 @@ public class Client extends Thread {
 	
 	private boolean running;
 	
-	public Client(String ip, int port){
+	public ClientSlave(String ip, int port){
 		this.ip = ip;
 		this.port = port;
 	}
 	/**
 	 * Constructor for developing
 	 */
-	public Client(){
+	public ClientSlave(){
 		this.ip = "localhost";
 		this.port = 1999;
 		this.name = "John Doe";
@@ -149,7 +149,7 @@ public class Client extends Thread {
 		}
 	}
 	public static void main(String[] args) {
-		new Thread(new Client()).start();
+		new Thread(new ClientSlave()).start();
 	}
 
 }
