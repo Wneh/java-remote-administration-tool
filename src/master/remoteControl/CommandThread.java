@@ -1,4 +1,4 @@
-package master;
+package master.remoteControl;
 
 import java.io.DataOutputStream;
 import java.io.IOException;

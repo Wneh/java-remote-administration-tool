@@ -1,4 +1,4 @@
-package master;
+package master.remoteControl;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;

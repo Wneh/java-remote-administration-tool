@@ -1,4 +1,4 @@
-package master;
+package master.remoteControl;
 
 import java.io.IOException;
 import java.net.*;

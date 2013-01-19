@@ -1,4 +1,4 @@
-package master;
+package master.remoteControl;
 
 public class GUIStatus {
 	
