@@ -60,6 +60,7 @@ public class ConnectionThread extends Thread {
 			while(running && ((packageID = dis.readByte()) != -1)){
 				
 				switch(packageID){
+					//Case 1 reserved for handshake
 					//Heartbeat
 					case 2:
 						// TODO Heartbeat functionality
@@ -71,6 +72,8 @@ public class ConnectionThread extends Thread {
 						//Get the masters ip
 						
 						//Get the masters port
+						
+						//Send to slave to connect
 						break;
 					//Get the list of all slaves connected
 					case 4:
