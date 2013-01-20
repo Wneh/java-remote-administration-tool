@@ -91,7 +91,7 @@ public class ConnectionThread extends Thread {
 	/**
 	 * Sends out an array containing information about all the connected to the ccserver
 	 */
-	private void sendConnectionList(){
+	private void sendConnectedList(){
 		//Setup some stuff
 		ArrayList<ConnectionThread> currentConnections = parent.getConnectionThread();
 		ConnectionThread tempConnection;
@@ -106,7 +106,7 @@ public class ConnectionThread extends Thread {
 				//Send id
 				dos.writeInt(tempConnection.getccserverId());
 				//Send name
-				writeString(tempConnection.computerName);
+				writeString(tempConnection.getComputerName());
 				//Send if in used
 				dos.writeBoolean(tempConnection.isInUse());
 				//Send if thread is a master
