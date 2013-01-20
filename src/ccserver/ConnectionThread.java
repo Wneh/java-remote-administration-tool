@@ -7,11 +7,12 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class ConnectionThread extends Thread {
 	
 	private Socket s;
-	private int id;
+	private int ccserverId;
 	private Server parent;
 	
 	private boolean running;
@@ -23,10 +24,10 @@ public class ConnectionThread extends Thread {
 	private DataOutputStream dos;
 	private InputStream in;
 	private DataInputStream dis;
-	
-	public ConnectionThread(Socket s,int id, Server parent){
+		
+	public ConnectionThread(Socket s,int ccserverId, Server parent){
 		this.s = s;
-		this.id = id;
+		this.ccserverId = ccserverId;
 		this.parent = parent;
 		
 		//Least privilege rule
@@ -83,10 +84,40 @@ public class ConnectionThread extends Thread {
 				
 			}
 		} catch (IOException e) {
-			parent.log.printlnErr("IO exception from thread #"+id);
+			parent.log.printlnErr("IO exception from thread #"+ccserverId);
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * Sends out an array containing information about all the connected to the ccserver
+	 */
+	private void sendConnectionList(){
+		//Setup some stuff
+		ArrayList<ConnectionThread> currentConnections = parent.getConnectionThread();
+		ConnectionThread tempConnection;
+		int size = currentConnections.size();
+		try {
+			//Send packageID
+			dos.writeByte(4);
+			//Start sending to master how many entry's we will send
+			dos.writeInt(size);
+			for(int i = 0; i < size; i++){
+				tempConnection = currentConnections.get(i);
+				//Send id
+				dos.writeInt(tempConnection.getccserverId());
+				//Send name
+				writeString(tempConnection.computerName);
+				//Send if in used
+				dos.writeBoolean(tempConnection.isInUse());
+				//Send if thread is a master
+				dos.writeBoolean(tempConnection.isMaster());
+			}
+		} catch (IOException e) {
+			parent.log.printlnErr("IO exception from thread #"+ccserverId + "@sendConnectionList");
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * This will ask this thread´s client to connect to the IP
 	 * This method is called from another ConnectionThread that is a master
@@ -183,6 +214,38 @@ public class ConnectionThread extends Thread {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	public int getccserverId(){
+		return ccserverId;
+	}
+
+	public void setId(int id) {
+		this.ccserverId = id;
+	}
+
+	public boolean isMaster() {
+		return master;
+	}
+
+	public void setMaster(boolean master) {
+		this.master = master;
+	}
+
+	public boolean isInUse() {
+		return inUse;
+	}
+
+	public void setInUse(boolean inUse) {
+		this.inUse = inUse;
+	}
+
+	public String getComputerName() {
+		return computerName;
+	}
+
+	public void setComputerName(String computerName) {
+		this.computerName = computerName;
 	}
 
 }
