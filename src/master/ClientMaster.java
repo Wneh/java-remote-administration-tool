@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 public class ClientMaster extends Thread {
 	
@@ -22,6 +23,8 @@ public class ClientMaster extends Thread {
 	private DataInputStream dis;
 	
 	private boolean running;
+	
+	private ArrayList<ConnectedUser> ccServerUsers;
 	
 	public ClientMaster(String ip, int port){
 		this.ip = ip;
@@ -52,12 +55,12 @@ public class ClientMaster extends Thread {
 					//Heartbeat return
 					case 2:
 						// TODO
-						System.out.println("Heartbeat confirmed by server");
+						//System.out.println("Heartbeat confirmed by server");
 						break;
 					//Master wants the slave to connect to him/her.
 					case 3:
 						// TODO
-						System.out.println("CCServer want you to connect to this master");
+						//System.out.println("CCServer want you to connect to this master");
 						break;
 				}
 			}
@@ -65,7 +68,25 @@ public class ClientMaster extends Thread {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}	
+	
+	private ArrayList<ConnectedUser> getConnectedList(){
+		ArrayList<ConnectedUser> tempList = new ArrayList<ConnectedUser>();
+		try {
+			//Get how many rows the server will send
+			int numberOfClients = dis.readInt();
+			//Now read in all the users
+			for(int i = 0; i < numberOfClients; i++){
+				//Get the information and add it to the arraylist.
+				tempList.add(new ConnectedUser(dis.readInt(), readString(), dis.readBoolean(), dis.readBoolean()));
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return tempList;
 	}
+	
 	private boolean doHandShake(){
 		byte packageID;
 		byte content;
@@ -84,13 +105,6 @@ public class ClientMaster extends Thread {
 				//We are connected to a ccserver
 				//Yes, continue sending the final answer to the server with our name
 				//PackageID = 1
-				dos.writeByte(1);
-				writeString(name);
-				return true;
-			}
-			else if(packageID == 1 && content == 3){
-				//We are connected to a master
-				// TODO Now listen what the master wants to do.
 				dos.writeByte(1);
 				writeString(name);
 				return true;
