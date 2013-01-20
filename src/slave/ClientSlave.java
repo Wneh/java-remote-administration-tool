@@ -22,10 +22,12 @@ public class ClientSlave extends Thread {
 	private DataInputStream dis;
 	
 	private boolean running;
+	private boolean isUsed;
 	
 	public ClientSlave(String ip, int port){
 		this.ip = ip;
 		this.port = port;
+		
 	}
 	/**
 	 * Constructor for developing
