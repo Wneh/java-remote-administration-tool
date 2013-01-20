@@ -1,4 +1,4 @@
 eclipse.preferences.version=1
-encoding//src/master/GUIMASTER.java=UTF-8
-encoding//src/slave/GUISLAVE.java=UTF-8
-encoding//src/slave/RobotSteer.java=UTF-8
+encoding//src/master/remoteControl/GUIMASTER.java=UTF-8
+encoding//src/slave/remoteControl/GUISLAVE.java=UTF-8
+encoding//src/slave/remoteControl/RobotSteer.java=UTF-8
