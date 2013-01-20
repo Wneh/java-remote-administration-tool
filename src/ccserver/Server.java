@@ -45,6 +45,9 @@ public class Server extends Thread {
 		
 		//RIP this.Thread		
 	}
+	public ArrayList<ConnectionThread> getConnectionThread(){
+		return connections;
+	}
 	
 	/**
 	 * Use this make everything ready for receiving connections
