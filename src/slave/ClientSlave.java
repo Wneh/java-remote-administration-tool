@@ -91,6 +91,8 @@ public class ClientSlave extends Thread {
 				//PackageID = 1
 				dos.writeByte(1);
 				writeString(name);
+				//And tell the server that it a slave connecting
+				dos.writeByte(1);
 				return true;
 			}
 			else if(packageID == 1 && content == 3){

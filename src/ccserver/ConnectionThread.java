@@ -59,29 +59,48 @@ public class ConnectionThread extends Thread {
 			parent.log.printlnOut(computerName + " connected to the server");
 			
 			while(running && ((packageID = dis.readByte()) != -1)){
-				
-				switch(packageID){
+				if(master){
+					/*
+					 * MASTER
+					 */	
+					switch(packageID){
+						//Heartbeat
+						case 2:
+							// TODO Heartbeat functionality
+							break;
+						//Ask a slave to connect to a master	
+						case 3:
+							//Get the slaves ID
+							
+							//Get the masters IP
+							
+							//Get the masters port
+							
+							//Send to slave to connect
+							break;
+						//Get the list of all slaves connected
+						case 4:
+							sendConnectedList();
+							break;
+					}
+				}
+				else{
+					/*
+					 * SLAVE
+					 */
+					switch(packageID){
 					//Case 1 reserved for handshake
 					//Heartbeat
 					case 2:
 						// TODO Heartbeat functionality
 						break;
-					//Ask a slave to connect to a master	
+					//Slaves current status
 					case 3:
-						//Get the slaves ID
-						
-						//Get the masters ip
-						
-						//Get the masters port
-						
-						//Send to slave to connect
-						break;
-					//Get the list of all slaves connected
-					case 4:
 						
 						break;
+					
+					}
 				}
-				
 			}
 		} catch (IOException e) {
 			parent.log.printlnErr("IO exception from thread #"+ccserverId);
@@ -177,12 +196,21 @@ public class ConnectionThread extends Thread {
 				//Now we should get a response with packageID = 1 and a String with the name of the computer
 				packageID = dis.readByte();
 				computerName = readString();
-				
+				//And a last byte that tells the server if the client is a slave or master. 1 = slave, 2 = master
+				byte typeOfClient = dis.readByte();
+				//Do the control
+				if(typeOfClient == 1){
+					master = false;
+				}
+				else{
+					master = true;
+				}
 				//PackageID shall have value 1 and the compuerName shall not be null anymore
 				if(packageID == 1 && computerName != null){
 					//Everything okey so return true
 					return true;
 				}
+			
 			}
 		} catch (IOException e) {
 			parent.log.printlnErr("I/O Exception while performing handshake");
