@@ -9,6 +9,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import slave.remoteControl.GUISLAVE;
+
 public class ClientSlave extends Thread {
 	
 	private String ip;
@@ -24,10 +26,11 @@ public class ClientSlave extends Thread {
 	private boolean running;
 	private boolean isUsed;
 	
+	private GUISLAVE gSlave = null;
+	
 	public ClientSlave(String ip, int port){
 		this.ip = ip;
 		this.port = port;
-		
 	}
 	/**
 	 * Constructor for developing
@@ -58,8 +61,8 @@ public class ClientSlave extends Thread {
 						break;
 					//Master wants the slave to connect to him/her.
 					case 3:
-						// TODO
 						System.out.println("CCServer want you to connect to this master");
+						connectToMaster(readString(),dis.readInt());
 						break;
 				}
 			}
@@ -125,6 +128,14 @@ public class ClientSlave extends Thread {
 			e.printStackTrace();
 		}
 	}
+	//
+	private void connectToMaster(String masterIp, int masterPort){
+		//Connect the slave to the master with the information provided
+		if(!isUsed){
+			gSlave = new GUISLAVE(masterIp,masterPort);
+		}
+	}
+	
 	private void writeString(String toWrite){
 		try {
 			byte[] data = toWrite.getBytes("UTF-8");
