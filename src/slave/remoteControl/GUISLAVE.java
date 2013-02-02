@@ -16,7 +16,7 @@ public class GUISLAVE extends JFrame implements ActionListener,WindowListener{
 	
 	private RemoteHandler rh;
 
-	public GUISLAVE(String host){
+	public GUISLAVE(String host,int port){
 		Container c = getContentPane();
 		c.setLayout(new BorderLayout());
 		try{
@@ -48,17 +48,17 @@ public class GUISLAVE extends JFrame implements ActionListener,WindowListener{
 		
 		//String host = JOptionPane.showInputDialog(null,"Host:");
 				
-		rh = new RemoteHandler(host,2000);
+		rh = new RemoteHandler(host,port);
 		rh.initializeThreads();
 		rh.startThreads();
 	}
 	
 	public static void main(String[] args) {
 		if(args.length > 0){
-			new GUISLAVE(args[0]);
+			new GUISLAVE(args[0],Integer.parseInt(args[1]));
 		}
 		else{
-			new GUISLAVE(JOptionPane.showInputDialog(null,"Host:"));
+			new GUISLAVE(JOptionPane.showInputDialog(null,"Host:"),2000);
 		}
 	}
 
