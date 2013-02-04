@@ -70,13 +70,8 @@ public class ConnectionThread extends Thread {
 							break;
 						//Ask a slave to connect to a master	
 						case 3:
-							//Get the slaves ID
-							
-							//Get the masters IP
-							
-							//Get the masters port
-							
-							//Send to slave to connect
+							//Get the information and pass it along
+							findAndConnectMasterToSlave(dis.readInt(), readString(), dis.readInt());
 							break;
 						//Get the list of all slaves connected
 						case 4:
@@ -89,16 +84,16 @@ public class ConnectionThread extends Thread {
 					 * SLAVE
 					 */
 					switch(packageID){
-					//Case 1 reserved for handshake
-					//Heartbeat
-					case 2:
-						// TODO Heartbeat functionality
-						break;
-					//Slaves current status
-					case 3:
-						
-						break;
-					
+						//Case 1 reserved for handshake
+						//Heartbeat
+						case 2:
+							// TODO Heartbeat functionality
+							break;
+						//Slaves current status
+						case 3:
+	
+							break;
+	
 					}
 				}
 			}
@@ -107,6 +102,26 @@ public class ConnectionThread extends Thread {
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * This method will be called from the when a master wants to connect to a slave
+	 * It will find the right slave with the slaveID and then send the masters
+	 * IP and port to the slave.
+	 * 
+	 * @param slaveID the slaves id on the ccserver
+	 * @param IP the masters ip address
+	 * @param port the master port
+	 */
+	private void findAndConnectMasterToSlave(int slaveID,String IP, int port){
+		//First find the slave
+		for(ConnectionThread ctSlave : parent.getConnectionThread()){
+			if(ctSlave.getccserverId() == slaveID){
+				//Now tell the slave to connect the the master
+				ctSlave.connectSlaveToMaster(IP, port);
+				break;
+			}
+		}
+	}
+	
 	/**
 	 * Sends out an array containing information about all the connected to the ccserver
 	 */
