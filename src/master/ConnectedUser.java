@@ -13,6 +13,9 @@ public class ConnectedUser {
 		this.inUse = inUse;
 		this.master = master;
 	}
+	public String toString(){
+		return "["+userId+","+computerName+","+inUse+","+master+"]";
+	}
 
 	public int getUserId() {
 		return userId;
