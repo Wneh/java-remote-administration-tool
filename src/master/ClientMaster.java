@@ -62,12 +62,34 @@ public class ClientMaster extends Thread {
 						// TODO
 						//System.out.println("CCServer want you to connect to this master");
 						break;
+					case 4:
+						setCcServerUsers(getConnectedList());
+						this.notifyAll();
+						break;
 				}
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}	
+	public void requestConnectedList(){
+		try {
+			dos.writeByte(4);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void requestConnectToSlave(int slaveID,String ip,int port){
+		try {
+			dos.writeByte(3);
+			writeString(ip);
+			dos.writeInt(port);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 	}	
 	
 	private ArrayList<ConnectedUser> getConnectedList(){
@@ -161,6 +183,25 @@ public class ClientMaster extends Thread {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	public void stopServer(){
+		try {
+			dis.close();
+			dos.close();
+			in.close();
+			out.close();
+			s.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public synchronized ArrayList<ConnectedUser> getCcServerUsers() {
+		return ccServerUsers;
+	}
+	public void setCcServerUsers(ArrayList<ConnectedUser> ccServerUsers) {
+		this.ccServerUsers = ccServerUsers;
 	}
 	public static void main(String[] args) {
 		new Thread(new ClientMaster()).start();
