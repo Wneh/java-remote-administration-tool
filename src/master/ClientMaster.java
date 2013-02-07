@@ -25,10 +25,12 @@ public class ClientMaster extends Thread {
 	private boolean running;
 	
 	private ArrayList<ConnectedUser> ccServerUsers;
+	private Lock lock = new Lock();
 	
-	public ClientMaster(String ip, int port){
+	public ClientMaster(String ip, int port,String name){
 		this.ip = ip;
 		this.port = port;
+		this.name = name;
 	}
 	/**
 	 * Constructor for developing
@@ -43,7 +45,9 @@ public class ClientMaster extends Thread {
 		//Start with setting up the connection
 		initializeClient();
 		//Continue with the handshake!
+		System.out.println("Starting handshake");
 		running = doHandShake();
+		System.out.println("Handshake done");
 		
 		byte packageID;
 		
@@ -62,9 +66,14 @@ public class ClientMaster extends Thread {
 						// TODO
 						//System.out.println("CCServer want you to connect to this master");
 						break;
+					//The respons from the server after requesting the connetionlist
 					case 4:
+						//Set the arraylist with the connectionlist
+						System.out.println("Getting connectionlist");
 						setCcServerUsers(getConnectedList());
-						this.notifyAll();
+						System.out.println("Done");
+						lock.unlock();
+						//Notify all that the thread is done with the connectionlist
 						break;
 				}
 			}
@@ -73,13 +82,22 @@ public class ClientMaster extends Thread {
 			e.printStackTrace();
 		}
 	}	
-	public void requestConnectedList(){
+	public ArrayList<ConnectedUser> requestConnectedList(){
 		try {
-			dos.writeByte(4);
+			dos.writeInt(4);
+			/* After requesting the server the send us the  connetionlist
+			 * wait for the repons
+			 */
+			lock.lock();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		//Now return the answer
+		return this.getCcServerUsers();
 	}
 	public void requestConnectToSlave(int slaveID,String ip,int port){
 		try {
@@ -129,6 +147,7 @@ public class ClientMaster extends Thread {
 				//PackageID = 1
 				dos.writeByte(1);
 				writeString(name);
+				dos.writeByte(2);
 				return true;
 			}
 		} catch (IOException e) {
@@ -200,7 +219,7 @@ public class ClientMaster extends Thread {
 	public synchronized ArrayList<ConnectedUser> getCcServerUsers() {
 		return ccServerUsers;
 	}
-	public void setCcServerUsers(ArrayList<ConnectedUser> ccServerUsers) {
+	public synchronized void setCcServerUsers(ArrayList<ConnectedUser> ccServerUsers) {
 		this.ccServerUsers = ccServerUsers;
 	}
 	public static void main(String[] args) {

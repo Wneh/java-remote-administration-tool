@@ -11,13 +11,15 @@ public class CLIMaster {
 		
 		System.out.println("IP:");
 		//Read the line out
-		scan.nextLine();
 		String ip = scan.nextLine();
 		//Read the port
 		System.out.println("Port:");
 		int port = scan.nextInt();
+		System.out.println("Your name");
+		scan.nextLine();
+		String name = scan.nextLine();
 		
-		ClientMaster cm = new ClientMaster(ip,port);
+		ClientMaster cm = new ClientMaster(ip,port,name);
 		cm.start();
 		
 		int choise;
@@ -29,17 +31,10 @@ public class CLIMaster {
 			choise = scan.nextInt();
 			switch(choise){
 				case 1:
-					//Request the server to get all the users
-					cm.requestConnectedList();
-					//Wait until the thread is they are done.
-					try {
-						cm.wait();
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					//Get the users and iterate over them and print them out
-					ArrayList<ConnectedUser> users = cm.getCcServerUsers();
+					
+					ArrayList<ConnectedUser> users = cm.requestConnectedList();
+					
+					//Now print the result
 					for(ConnectedUser user: users){
 						System.out.println(user.toString());
 					}
