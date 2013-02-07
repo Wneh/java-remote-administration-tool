@@ -53,8 +53,9 @@ public class ConnectionThread extends Thread {
 		byte packageID;
 		
 		try {
-			
+			System.out.println("Starting new handshake from thread " + ccserverId);
 			running = doHandShake();
+			
 			
 			parent.log.printlnOut(computerName + " connected to the server");
 			
@@ -75,7 +76,10 @@ public class ConnectionThread extends Thread {
 							break;
 						//Get the list of all slaves connected
 						case 4:
+							System.out.println(computerName + " requested connectionlist");
+							System.out.println("Start sedning...");
 							sendConnectedList();
+							System.out.println("...Done sending");
 							break;
 					}
 				}
@@ -113,6 +117,7 @@ public class ConnectionThread extends Thread {
 	 */
 	private void findAndConnectMasterToSlave(int slaveID,String IP, int port){
 		//First find the slave
+
 		for(ConnectionThread ctSlave : parent.getConnectionThread()){
 			if(ctSlave.getccserverId() == slaveID){
 				//Now tell the slave to connect the the master
@@ -130,6 +135,7 @@ public class ConnectionThread extends Thread {
 		ArrayList<ConnectionThread> currentConnections = parent.getConnectionThread();
 		ConnectionThread tempConnection;
 		int size = currentConnections.size();
+		System.out.println("    Number of users: " + size);
 		try {
 			//Send packageID
 			dos.writeByte(4);
