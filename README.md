@@ -8,5 +8,5 @@ This was my final project in my first programming course at The Royal Institute 
 
 The project will be updated whenever I've got time over!
 
-Changelog
+# Changelog
 See the Changelog wikipage
